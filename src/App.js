@@ -4,43 +4,43 @@ import Plot from 'react-plotly.js';
 function App() {
   
   // PIE CHART
-  // const [chartState, setchartState] = useState({
-  //   data: [],
-  //   layout: {
-  //     width: 800,
-  //     height: 400,
-  //     title: 'My first diagram'
-  //   },
-  //   frames: [],
-  //   config: {}
-  // });
+  const [chartState, setchartState] = useState({
+    data: [],
+    layout: {
+      width: 800,
+      height: 400,
+      title: 'My first diagram'
+    },
+    frames: [],
+    config: {}
+  });
 
-  // useEffect(() => {
-  //   let newChartData = {
-  //     type: 'pie',
-  //     values: [],
-  //     labels:[] 
-  //   };
+  useEffect(() => {
+    let newChartData = {
+      type: 'pie',
+      values: [],
+      labels:[] 
+    };
 
-  //   fetch('https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=fbe2e7e0b56f9bf6b6494c16e380deb4')
-  //     .then(response => response.json())
-  //     .then(data => {
-  //       data.results.forEach(item => {
-  //         newChartData.labels.push(item.title);
-  //         newChartData.values.push(item.popularity);
-  //       });
+    fetch('https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=fbe2e7e0b56f9bf6b6494c16e380deb4')
+      .then(response => response.json())
+      .then(data => {
+        data.results.forEach(item => {
+          newChartData.labels.push(item.title);
+          newChartData.values.push(item.popularity);
+        });
 
-  //       let newChartState = {
-  //         ...chartState,
-  //         data: [newChartData]
-  //       };
+        let newChartState = {
+          ...chartState,
+          data: [newChartData]
+        };
 
-  //       setchartState(newChartState);
-  //     })
-  //     .catch(error => {
-  //       console.log(error)
-  //     })
-  // }, []);
+        setchartState(newChartState);
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  }, []);
 
   // BAR CHART
   const [barChartState, setBarChartState] = useState({
@@ -63,24 +63,24 @@ function App() {
     fetch("https://age-of-empires-2-api.herokuapp.com/api/v1/units")
     .then(response => response.json())
     .then(data => {
-      data.results.forEach(unit => {
+      data.units.forEach(unit => {
         newBarChartData.x.push(unit.name)
         newBarChartData.y.push(unit.attack)
       });
+      
 
       let newBarChartState = {
         ...barChartState,
-        data: [newBarChartData]
+        data: [newBarChartData],
       }
-
+  
       setBarChartState(newBarChartState);
+      console.log(data)
+
     })
     .catch(error => {
       console.log(error)
     })
-
-    
-
 
   }, [])
 
@@ -95,14 +95,14 @@ function App() {
         onUpdate={(figure) => setBarChartState(figure)}
       />
 
-      {/* <Plot
+      <Plot
         data={chartState.data}
         layout={chartState.layout}
         frames={chartState.frames}
         config={chartState.config}
         onInitialized={(figure) => setchartState(figure)}
         onUpdate={(figure) => setchartState(figure)}
-      /> */}
+      />
     </>
   )
 };
